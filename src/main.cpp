@@ -6,71 +6,71 @@
 
 using namespace std;
 
-void containerMenu(Container *&);
+int containerMenu(Container *&);
 void elementMenu(Container *);
 void sortMenu(Container *);
 
 int main(void) {
     Container * container;
-    //SortAlgorithm * sortAlgo;
+    bool run = true;
 
-    containerMenu(container);
+    while (run) {
 
-    /*
-    container->insert(8);
-    container->insert(64);
-    container->insert(16);
-    container->insert(32);
-    container->insert(128);
-    container->insert(4);
-    */
-    elementMenu(container);
-    container->print();
+        switch(containerMenu(container)) {
+            case 1:
+                container = new List();
+                break;
+            case 2:
+                //container = new Vector();
+                break;
+            case 3:
+                run = false;
+                return -1;
+                break;
+        }
 
-    //sortAlgo = new SelectionSort();
+        elementMenu(container);
+        cout << endl;
+        container->print();
+        cout << endl;
 
-    //container->set_sort(sortAlgo);
-    sortMenu(container);
-    container->sort();
-
-    container->print();
+        sortMenu(container);
+        cout << endl;
+        container->sort();
+        container->print();
+        cout << endl;
+    }
 }
 
-void containerMenu(Container *& container) {
+int containerMenu(Container *& container) {
     int selection = 0;
 
     while (1) {
         cout << "Select a container:" << endl
             << "  1. List" << endl
-            << "  2. Vector" << endl << endl
+            << "  2. Vector" << endl
+            << "  3. Exit" << endl << endl
             << "        Selection: ";
         cin.clear();
         cin >> selection;
-        if (selection == 1 || selection == 2)
-            break;
+        if (selection == 1 || selection == 2 || selection == 3)
+            return selection;
         cout << endl << "Error: Invalid selection!" << endl
             << "Please enter your selection as either 1 or 2." << endl
             << endl;
-    }
- 
-    switch(selection) {
-        case 1:
-            container = new List();
-            break;
-        case 2:
-            //container = new Vector();
-            break;
     }
 }
 
 void elementMenu(Container * container) {
     int element;
 
-    cout << "Enter an integer to store as an element in the container."
+    cout << endl << endl 
+        << "Enter an integer to store as an element in the container."
         << endl << "Enter a non-integer to end." << endl;
     cin.clear();
+    cout << endl << "Element: ";
     while (cin >> element) {
-        cout << endl << "Element: ";
+        cout << "Element: ";
         container->insert(element);
     }
 }
